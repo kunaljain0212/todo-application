@@ -24,12 +24,13 @@
 //REMOVE DONE TODOS
 
 var ul = document.getElementById("list");
+var input = document.getElementById("input");
 
 var addButton = document.getElementById("add");
 addButton.addEventListener("click", addItem);
+input.addEventListener("keypress", addItemKeypress);
 
 function addItem() {
-  var input = document.getElementById("input");
   var item = input.value;
   var textNode = document.createTextNode(item);
 
@@ -54,6 +55,30 @@ function addItem() {
     }, 2);
     input.value = "";
   }
+}
+function addItemKeypress(event) {
+  var item = input.value;
+  var textNode = document.createTextNode(item);
+
+  if (item != "" && event.keyCode == 13) {
+    var li = document.createElement("li");
+    li.setAttribute("class", "myCheck");
+    var checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.setAttribute("id", "check");
+
+    var label = document.createElement("label");
+    label.setAttribute("for", "item");
+
+    li.appendChild(checkbox);
+    label.appendChild(textNode);
+    li.appendChild(label);
+    ul.insertBefore(li, ul.childNodes[0]);
+    setTimeout(() => {
+      li.className = "visual";
+    }, 2);
+    input.value = "";
+  } 
 }
 
 var removeButton = document.getElementById("remove");
